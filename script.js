@@ -108,3 +108,30 @@ function checkAnswer(answer) {
     document.getElementById("quiz-box").innerHTML = `<h2>Quiz Completed</h2><p>Your Score: ${score}/${quizQuestions.length}</p>`;
   }
 }
+function checkAnswer(answer) {
+  const currentQ = quizQuestions[currentQuestion];
+  if (answer === currentQ.answer) score++;
+  currentQuestion++;
+
+  if (currentQuestion < quizQuestions.length) {
+    showQuestion();
+  } else {
+    showResults();
+  }
+}
+
+function showResults() {
+  let resultHTML = `<h2>Quiz Completed</h2><p>Your Score: ${score}/${quizQuestions.length}</p>`;
+  resultHTML += `<h3>Correct Answers:</h3><ul style="text-align: left; display: inline-block;">`;
+
+  quizQuestions.forEach((q, index) => {
+    resultHTML += `
+      <li>
+        <strong>Q${index + 1}:</strong> ${q.question}<br>
+        ✅ <strong>Answer:</strong> ${q.options[q.answer]}
+      </li><br>`;
+  });
+
+  resultHTML += `</ul>`;
+  document.getElementById("quiz-box").innerHTML = resultHTML;
+}
